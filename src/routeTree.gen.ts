@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExamsRouteImport } from './routes/exams'
 import { Route as HomeworkRouteImport } from './routes/homework'
+import { Route as NotesRouteImport } from './routes/notes'
 import { Route as SubjectsRouteImport } from './routes/subjects'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const HomeworkRoute = HomeworkRouteImport.update({
   path: '/homework',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotesRoute = NotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SubjectsRoute = SubjectsRouteImport.update({
   id: '/subjects',
   path: '/subjects',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/exams': typeof ExamsRoute
   '/homework': typeof HomeworkRoute
+  '/notes': typeof NotesRoute
   '/subjects': typeof SubjectsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/exams': typeof ExamsRoute
   '/homework': typeof HomeworkRoute
+  '/notes': typeof NotesRoute
   '/subjects': typeof SubjectsRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/exams': typeof ExamsRoute
   '/homework': typeof HomeworkRoute
+  '/notes': typeof NotesRoute
   '/subjects': typeof SubjectsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/exams' | '/homework' | '/subjects'
+  fullPaths: '/' | '/exams' | '/homework' | '/notes' | '/subjects'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/exams' | '/homework' | '/subjects'
-  id: '__root__' | '/' | '/exams' | '/homework' | '/subjects'
+  to: '/' | '/exams' | '/homework' | '/notes' | '/subjects'
+  id: '__root__' | '/' | '/exams' | '/homework' | '/notes' | '/subjects'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ExamsRoute: typeof ExamsRoute
   HomeworkRoute: typeof HomeworkRoute
+  NotesRoute: typeof NotesRoute
   SubjectsRoute: typeof SubjectsRoute
 }
 
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeworkRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/notes': {
+      id: '/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof NotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/subjects': {
       id: '/subjects'
       path: '/subjects'
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ExamsRoute: ExamsRoute,
   HomeworkRoute: HomeworkRoute,
+  NotesRoute: NotesRoute,
   SubjectsRoute: SubjectsRoute,
 }
 export const routeTree = rootRouteImport
