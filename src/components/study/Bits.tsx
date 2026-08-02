@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import type { Subject } from "@/lib/study-store";
 
-export function SubjectDot({ subject }: { subject?: Subject }) {
+export function SubjectDot({ subject }: { subject?: Subject | undefined }) {
   return (
     <span className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground">
       <span

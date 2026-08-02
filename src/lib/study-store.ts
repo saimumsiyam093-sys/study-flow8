@@ -3,32 +3,32 @@ import { useCallback, useEffect, useState } from "react";
 export type Subject = {
   id: string;
   name: string;
-  teacher?: string;
+  teacher?: string | undefined;
   color: string;
 };
 
 export type Homework = {
   id: string;
   title: string;
-  subjectId?: string;
+  subjectId?: string | undefined;
   due: string; // yyyy-mm-dd
-  notes?: string;
+  notes?: string | undefined;
   done: boolean;
 };
 
 export type Exam = {
   id: string;
   title: string;
-  subjectId?: string;
+  subjectId?: string | undefined;
   date: string; // yyyy-mm-dd
-  time?: string;
-  room?: string;
+  time?: string | undefined;
+  room?: string | undefined;
 };
 
 export type Note = {
   id: string;
   title: string;
-  subjectId?: string;
+  subjectId?: string | undefined;
   body: string;
   updated: string;
 };
