@@ -33,7 +33,7 @@ export type Note = {
   updated: string;
 };
 
-export const SUBJECT_COLORS = [
+export const SUBJECT_COLORS: string[] = [
   "var(--accent-1)",
   "var(--accent-2)",
   "var(--accent-3)",
@@ -41,6 +41,9 @@ export const SUBJECT_COLORS = [
   "var(--accent-5)",
   "var(--accent-6)",
 ];
+
+export const pickColor = (i: number) =>
+  SUBJECT_COLORS[i % SUBJECT_COLORS.length] ?? "var(--accent-1)";
 
 export const uid = () => Math.random().toString(36).slice(2, 10);
 
@@ -65,9 +68,9 @@ const seed = (): StoreData => {
   const hist = uid();
   return {
     subjects: [
-      { id: math, name: "Mathematics", teacher: "Ms. Alvarez", color: SUBJECT_COLORS[0] },
-      { id: bio, name: "Biology", teacher: "Mr. Chen", color: SUBJECT_COLORS[1] },
-      { id: hist, name: "History", teacher: "Mrs. Okafor", color: SUBJECT_COLORS[2] },
+      { id: math, name: "Mathematics", teacher: "Ms. Alvarez", color: pickColor(0) },
+      { id: bio, name: "Biology", teacher: "Mr. Chen", color: pickColor(1) },
+      { id: hist, name: "History", teacher: "Mrs. Okafor", color: pickColor(2) },
     ],
     homework: [
       { id: uid(), title: "Quadratic equations worksheet", subjectId: math, due: d(0), done: false },
