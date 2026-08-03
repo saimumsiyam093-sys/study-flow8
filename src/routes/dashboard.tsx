@@ -198,6 +198,9 @@ function Dashboard() {
           </div>
         </section>
       </div>
+      <div className="mt-4">
+        <AiDashboardCards />
+      </div>
     </AppShell>
   );
 }
