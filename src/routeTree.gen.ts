@@ -18,6 +18,8 @@ import { Route as HomeworkRouteImport } from './routes/homework'
 import { Route as NotesRouteImport } from './routes/notes'
 import { Route as SubjectsRouteImport } from './routes/subjects'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as ApiOcrRouteImport } from './routes/api/ocr'
+import { Route as ApiSuggestRouteImport } from './routes/api/suggest'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +66,16 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiOcrRoute = ApiOcrRouteImport.update({
+  id: '/api/ocr',
+  path: '/api/ocr',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSuggestRoute = ApiSuggestRouteImport.update({
+  id: '/api/suggest',
+  path: '/api/suggest',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -75,6 +87,8 @@ export interface FileRoutesByFullPath {
   '/notes': typeof NotesRoute
   '/subjects': typeof SubjectsRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/ocr': typeof ApiOcrRoute
+  '/api/suggest': typeof ApiSuggestRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +100,8 @@ export interface FileRoutesByTo {
   '/notes': typeof NotesRoute
   '/subjects': typeof SubjectsRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/ocr': typeof ApiOcrRoute
+  '/api/suggest': typeof ApiSuggestRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +114,8 @@ export interface FileRoutesById {
   '/notes': typeof NotesRoute
   '/subjects': typeof SubjectsRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/ocr': typeof ApiOcrRoute
+  '/api/suggest': typeof ApiSuggestRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +129,8 @@ export interface FileRouteTypes {
     | '/notes'
     | '/subjects'
     | '/api/chat'
+    | '/api/ocr'
+    | '/api/suggest'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +142,8 @@ export interface FileRouteTypes {
     | '/notes'
     | '/subjects'
     | '/api/chat'
+    | '/api/ocr'
+    | '/api/suggest'
   id:
     | '__root__'
     | '/'
@@ -133,6 +155,8 @@ export interface FileRouteTypes {
     | '/notes'
     | '/subjects'
     | '/api/chat'
+    | '/api/ocr'
+    | '/api/suggest'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -145,6 +169,8 @@ export interface RootRouteChildren {
   NotesRoute: typeof NotesRoute
   SubjectsRoute: typeof SubjectsRoute
   ApiChatRoute: typeof ApiChatRoute
+  ApiOcrRoute: typeof ApiOcrRoute
+  ApiSuggestRoute: typeof ApiSuggestRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -212,6 +238,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ocr': {
+      id: '/api/ocr'
+      path: '/api/ocr'
+      fullPath: '/api/ocr'
+      preLoaderRoute: typeof ApiOcrRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/suggest': {
+      id: '/api/suggest'
+      path: '/api/suggest'
+      fullPath: '/api/suggest'
+      preLoaderRoute: typeof ApiSuggestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -225,6 +265,8 @@ const rootRouteChildren: RootRouteChildren = {
   NotesRoute: NotesRoute,
   SubjectsRoute: SubjectsRoute,
   ApiChatRoute: ApiChatRoute,
+  ApiOcrRoute: ApiOcrRoute,
+  ApiSuggestRoute: ApiSuggestRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
