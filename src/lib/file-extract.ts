@@ -46,12 +46,13 @@ async function extractPdf(file: File) {
       .replace(/\s+/g, " ");
     pages.push(`--- Page ${i} ---\n${text}`);
   }
-  await doc.destroy();
   return pages.join("\n\n");
 }
 
 async function extractDocx(file: File) {
-  const mammoth = await import("mammoth/mammoth.browser.js");
+  const mammoth = (await import("mammoth/mammoth.browser.js")) as unknown as {
+    extractRawText: (input: { arrayBuffer: ArrayBuffer }) => Promise<{ value: string }>;
+  };
   const result = await mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() });
   return result.value;
 }
