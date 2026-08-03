@@ -17,6 +17,8 @@ import { Route as ExamsRouteImport } from './routes/exams'
 import { Route as HomeworkRouteImport } from './routes/homework'
 import { Route as NotesRouteImport } from './routes/notes'
 import { Route as SubjectsRouteImport } from './routes/subjects'
+import { Route as AiHelperIndexRouteImport } from './routes/ai-helper.index'
+import { Route as AiHelperThreadIdRouteImport } from './routes/ai-helper.$threadId'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as ApiOcrRouteImport } from './routes/api/ocr'
 import { Route as ApiSuggestRouteImport } from './routes/api/suggest'
@@ -61,6 +63,16 @@ const SubjectsRoute = SubjectsRouteImport.update({
   path: '/subjects',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiHelperIndexRoute = AiHelperIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AiHelperRoute,
+} as any)
+const AiHelperThreadIdRoute = AiHelperThreadIdRouteImport.update({
+  id: '/$threadId',
+  path: '/$threadId',
+  getParentRoute: () => AiHelperRoute,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
@@ -80,42 +92,47 @@ const ApiSuggestRoute = ApiSuggestRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/ai-helper': typeof AiHelperRoute
+  '/ai-helper': typeof AiHelperRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/exams': typeof ExamsRoute
   '/homework': typeof HomeworkRoute
   '/notes': typeof NotesRoute
   '/subjects': typeof SubjectsRoute
+  '/ai-helper/$threadId': typeof AiHelperThreadIdRoute
   '/api/chat': typeof ApiChatRoute
   '/api/ocr': typeof ApiOcrRoute
   '/api/suggest': typeof ApiSuggestRoute
+  '/ai-helper/': typeof AiHelperIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/ai-helper': typeof AiHelperRoute
   '/dashboard': typeof DashboardRoute
   '/exams': typeof ExamsRoute
   '/homework': typeof HomeworkRoute
   '/notes': typeof NotesRoute
   '/subjects': typeof SubjectsRoute
+  '/ai-helper/$threadId': typeof AiHelperThreadIdRoute
   '/api/chat': typeof ApiChatRoute
   '/api/ocr': typeof ApiOcrRoute
   '/api/suggest': typeof ApiSuggestRoute
+  '/ai-helper': typeof AiHelperIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/ai-helper': typeof AiHelperRoute
+  '/ai-helper': typeof AiHelperRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/exams': typeof ExamsRoute
   '/homework': typeof HomeworkRoute
   '/notes': typeof NotesRoute
   '/subjects': typeof SubjectsRoute
+  '/ai-helper/$threadId': typeof AiHelperThreadIdRoute
   '/api/chat': typeof ApiChatRoute
   '/api/ocr': typeof ApiOcrRoute
   '/api/suggest': typeof ApiSuggestRoute
+  '/ai-helper/': typeof AiHelperIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -128,22 +145,25 @@ export interface FileRouteTypes {
     | '/homework'
     | '/notes'
     | '/subjects'
+    | '/ai-helper/$threadId'
     | '/api/chat'
     | '/api/ocr'
     | '/api/suggest'
+    | '/ai-helper/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/ai-helper'
     | '/dashboard'
     | '/exams'
     | '/homework'
     | '/notes'
     | '/subjects'
+    | '/ai-helper/$threadId'
     | '/api/chat'
     | '/api/ocr'
     | '/api/suggest'
+    | '/ai-helper'
   id:
     | '__root__'
     | '/'
@@ -154,15 +174,17 @@ export interface FileRouteTypes {
     | '/homework'
     | '/notes'
     | '/subjects'
+    | '/ai-helper/$threadId'
     | '/api/chat'
     | '/api/ocr'
     | '/api/suggest'
+    | '/ai-helper/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  AiHelperRoute: typeof AiHelperRoute
+  AiHelperRoute: typeof AiHelperRouteWithChildren
   DashboardRoute: typeof DashboardRoute
   ExamsRoute: typeof ExamsRoute
   HomeworkRoute: typeof HomeworkRoute
@@ -231,6 +253,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SubjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-helper/': {
+      id: '/ai-helper/'
+      path: '/'
+      fullPath: '/ai-helper/'
+      preLoaderRoute: typeof AiHelperIndexRouteImport
+      parentRoute: typeof AiHelperRoute
+    }
+    '/ai-helper/$threadId': {
+      id: '/ai-helper/$threadId'
+      path: '/$threadId'
+      fullPath: '/ai-helper/$threadId'
+      preLoaderRoute: typeof AiHelperThreadIdRouteImport
+      parentRoute: typeof AiHelperRoute
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -255,10 +291,24 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AiHelperRouteChildren {
+  AiHelperThreadIdRoute: typeof AiHelperThreadIdRoute
+  AiHelperIndexRoute: typeof AiHelperIndexRoute
+}
+
+const AiHelperRouteChildren: AiHelperRouteChildren = {
+  AiHelperThreadIdRoute: AiHelperThreadIdRoute,
+  AiHelperIndexRoute: AiHelperIndexRoute,
+}
+
+const AiHelperRouteWithChildren = AiHelperRoute._addFileChildren(
+  AiHelperRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  AiHelperRoute: AiHelperRoute,
+  AiHelperRoute: AiHelperRouteWithChildren,
   DashboardRoute: DashboardRoute,
   ExamsRoute: ExamsRoute,
   HomeworkRoute: HomeworkRoute,

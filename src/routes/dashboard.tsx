@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { CalendarDays, CheckCircle2, ChevronLeft, ChevronRight, ClipboardList, Timer } from "lucide-react";
 import { AppShell, PageHeader } from "@/components/AppShell";
+import { AiDashboardCards } from "@/components/study/AiDashboardCards";
 import { EmptyState, StatCard, SubjectDot } from "@/components/study/Bits";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
