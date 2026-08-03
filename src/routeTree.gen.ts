@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AiHelperRouteImport } from './routes/ai-helper'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ExamsRouteImport } from './routes/exams'
 import { Route as HomeworkRouteImport } from './routes/homework'
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiHelperRoute = AiHelperRouteImport.update({
+  id: '/ai-helper',
+  path: '/ai-helper',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -62,6 +68,7 @@ const ApiChatRoute = ApiChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-helper': typeof AiHelperRoute
   '/dashboard': typeof DashboardRoute
   '/exams': typeof ExamsRoute
   '/homework': typeof HomeworkRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-helper': typeof AiHelperRoute
   '/dashboard': typeof DashboardRoute
   '/exams': typeof ExamsRoute
   '/homework': typeof HomeworkRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-helper': typeof AiHelperRoute
   '/dashboard': typeof DashboardRoute
   '/exams': typeof ExamsRoute
   '/homework': typeof HomeworkRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/ai-helper'
     | '/dashboard'
     | '/exams'
     | '/homework'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/ai-helper'
     | '/dashboard'
     | '/exams'
     | '/homework'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/ai-helper'
     | '/dashboard'
     | '/exams'
     | '/homework'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AiHelperRoute: typeof AiHelperRoute
   DashboardRoute: typeof DashboardRoute
   ExamsRoute: typeof ExamsRoute
   HomeworkRoute: typeof HomeworkRoute
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-helper': {
+      id: '/ai-helper'
+      path: '/ai-helper'
+      fullPath: '/ai-helper'
+      preLoaderRoute: typeof AiHelperRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AiHelperRoute: AiHelperRoute,
   DashboardRoute: DashboardRoute,
   ExamsRoute: ExamsRoute,
   HomeworkRoute: HomeworkRoute,
